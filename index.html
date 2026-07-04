@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Feliz cumpleaños</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300..900;1,300..900&family=Sora:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+
+  /* ============================================================
+     CONFIG — edita aquí los datos, no necesitas tocar el resto
+     ============================================================ */
+  :root{
+    --clr-abismo:#071624;
+    --clr-noche:#0d2740;
+    --clr-marino:#154066;
+    --clr-espuma:#cfe8e0;
+    --clr-luna:#fff6e6;
+    --clr-arena:#e8c9a0;
+    --clr-coral:#ff8a65;
+    --clr-coral-suave:#ffb199;
+  }
+
+  *{box-sizing:border-box; margin:0; padding:0;}
+
+  html{scroll-behavior:smooth;}
+
+  body{
+    background:var(--clr-abismo);
+    color:var(--clr-espuma);
+    font-family:'Sora', sans-serif;
+    overflow-x:hidden;
+  }
+
+  h1,h2,h3, .display{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    color:var(--clr-luna);
+  }
+
+  .mono{
+    font-family:'Space Mono', monospace;
+  }
+
+  a{color:inherit;}
+
+  /* ---------------- HERO ---------------- */
+
+  .hero{
+    position:relative;
+    min-height:100svh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:6rem 1.5rem 10rem;
+    background:
+      radial-gradient(circle at 78% 18%, rgba(255,246,230,0.16), rgba(255,246,230,0) 38%),
+      linear-gradient(180deg, var(--clr-abismo) 0%, var(--clr-noche) 55%, var(--clr-marino) 100%);
+    overflow:hidden;
+  }
+
+  .luna{
+    position:absolute;
+    top:9%;
+    right:12%;
+    width:110px;
+    height:110px;
+    border-radius:50%;
+    background:radial-gradient(circle at 35% 32%, #fffef8, var(--clr-luna) 55%, #f2e2c2 100%);
+    box-shadow:0 0 60px 18px rgba(255,246,230,0.25);
+    cursor:pointer;
+    animation:respirar 6s ease-in-out infinite;
+    z-index:2;
+  }
+  .luna:hover{ box-shadow:0 0 80px 26px rgba(255,246,230,0.4); }
+
+  @keyframes respirar{
+    0%,100%{ transform:scale(1); }
+    50%{ transform:scale(1.04); }
+  }
+
+  .estrellas{
+    position:absolute; inset:0;
+    background-image:
+      radial-gradient(1.5px 1.5px at 20% 30%, #fff, transparent),
+      radial-gradient(1px 1px at 60% 15%, #fff, transparent),
+      radial-gradient(1.5px 1.5px at 85% 45%, #fff, transparent),
+      radial-gradient(1px 1px at 35% 55%, #fff, transparent),
+      radial-gradient(1.5px 1.5px at 10% 70%, #fff, transparent),
+      radial-gradient(1px 1px at 70% 65%, #fff, transparent),
+      radial-gradient(1px 1px at 92% 20%, #fff, transparent);
+    opacity:0.55;
+    pointer-events:none;
+  }
+
+  .eyebrow{
+    font-family:'Space Mono', monospace;
+    letter-spacing:0.28em;
+    text-transform:uppercase;
+    font-size:0.72rem;
+    color:var(--clr-coral-suave);
+    margin-bottom:1.4rem;
+    z-index:3;
+  }
+
+  .hero h1{
+    font-size:clamp(2.4rem, 7vw, 5rem);
+    line-height:1.05;
+    max-width:14ch;
+    z-index:3;
+    font-style:italic;
+    font-weight:500;
+  }
+
+  .hero h1 span{
+    display:block;
+    font-style:normal;
+    font-weight:700;
+    color:var(--clr-coral);
+  }
+
+  .hero-sub{
+    margin-top:1.6rem;
+    max-width:38ch;
+    font-size:1.05rem;
+    color:var(--clr-espuma);
+    opacity:0.85;
+    z-index:3;
+  }
+
+  .fecha-pill{
+    margin-top:2.2rem;
+    display:inline-flex;
+    gap:0.6rem;
+    align-items:center;
+    font-family:'Space Mono', monospace;
+    font-size:0.85rem;
+    padding:0.55rem 1.1rem;
+    border:1px solid rgba(255,246,230,0.3);
+    border-radius:100px;
+    z-index:3;
+    color:var(--clr-arena);
+  }
+
+  /* olas */
+  .olas{
+    position:absolute;
+    bottom:0; left:0;
+    width:100%;
+    line-height:0;
+    z-index:1;
+  }
+  .olas svg{ width:100%; height:auto; display:block; }
+
+  .ola-fondo{ animation:ondear 14s ease-in-out infinite; transform-origin:center; }
+  .ola-frente{ animation:ondear 9s ease-in-out infinite reverse; transform-origin:center; }
+  @keyframes ondear{
+    0%,100%{ transform:translateX(0) translateY(0); }
+    50%{ transform:translateX(-2%) translateY(4px); }
+  }
+
+  /* cangrejo escenario */
+  .escenario-cangrejo{
+    position:absolute;
+    bottom:38px;
+    left:0;
+    width:100%;
+    height:60px;
+    z-index:2;
+    pointer-events:none;
+  }
+  .cangrejo{
+    position:absolute;
+    bottom:0;
+    left:-80px;
+    width:52px;
+    animation:caminar 17s linear infinite;
+  }
+  @keyframes caminar{
+    0%{ left:-10%; transform:scaleX(1) translateY(0); }
+    48%{ transform:scaleX(1) translateY(-3px); }
+    50%{ left:70%; transform:scaleX(-1) translateY(0); }
+    98%{ transform:scaleX(-1) translateY(-3px); }
+    100%{ left:-10%; transform:scaleX(-1) translateY(0); }
+  }
+
+  .scroll-hint{
+    position:absolute;
+    bottom:14px;
+    font-family:'Space Mono', monospace;
+    font-size:0.65rem;
+    letter-spacing:0.2em;
+    text-transform:uppercase;
+    color:var(--clr-espuma);
+    opacity:0.55;
+    z-index:3;
+  }
+
+  /* ---------------- SECCIONES GENERALES ---------------- */
+
+  section{
+    padding:6.5rem 1.5rem;
+    position:relative;
+  }
+
+  .contenedor{
+    max-width:760px;
+    margin:0 auto;
+  }
+
+  .marino-bg{ background:var(--clr-marino); }
+  .noche-bg{ background:var(--clr-noche); }
+
+  .kicker{
+    font-family:'Space Mono', monospace;
+    font-size:0.72rem;
+    letter-spacing:0.28em;
+    text-transform:uppercase;
+    color:var(--clr-coral-suave);
+    display:block;
+    margin-bottom:1rem;
+  }
+
+  section h2{
+    font-size:clamp(1.8rem, 4.5vw, 2.6rem);
+    margin-bottom:1.8rem;
+    font-style:italic;
+  }
+
+  /* ---------------- CARTA ---------------- */
+
+  .carta{
+    background:linear-gradient(180deg, rgba(255,246,230,0.06), rgba(255,246,230,0.02));
+    border:1px solid rgba(255,246,230,0.14);
+    border-radius:4px;
+    padding:2.6rem 2.2rem;
+    position:relative;
+  }
+  .carta::before{
+    content:"🦀";
+    position:absolute;
+    top:-18px;
+    left:2.2rem;
+    background:var(--clr-marino);
+    padding:0 0.5rem;
+    font-size:1.4rem;
+  }
+  .carta p{
+    font-size:1.08rem;
+    line-height:1.85;
+    margin-bottom:1.2rem;
+    color:var(--clr-espuma);
+  }
+  .firma{
+    margin-top:1.8rem;
+    font-family:'Fraunces', serif;
+    font-style:italic;
+    font-size:1.3rem;
+    color:var(--clr-arena);
+  }
+
+  /* ---------------- ITINERARIO ---------------- */
+
+  .linea-tiempo{
+    position:relative;
+    padding-left:2.2rem;
+    border-left:1px dashed rgba(255,246,230,0.28);
+  }
+
+  .momento{
+    position:relative;
+    padding-bottom:3rem;
+  }
+  .momento:last-child{ padding-bottom:0; }
+
+  .momento::before{
+    content:"";
+    position:absolute;
+    left:-2.55rem;
+    top:0.15rem;
+    width:12px; height:12px;
+    border-radius:50%;
+    background:var(--clr-coral);
+    box-shadow:0 0 0 5px rgba(255,138,101,0.18);
+  }
+
+  .hora{
+    font-family:'Space Mono', monospace;
+    font-size:0.78rem;
+    letter-spacing:0.08em;
+    color:var(--clr-coral-suave);
+    display:block;
+    margin-bottom:0.4rem;
+  }
+
+  .momento h3{
+    font-size:1.3rem;
+    margin-bottom:0.5rem;
+    font-style:normal;
+  }
+
+  .momento p{
+    color:var(--clr-espuma);
+    opacity:0.85;
+    line-height:1.7;
+    max-width:52ch;
+  }
+
+  /* ---------------- RASGOS DE CANCER ---------------- */
+
+  .rejilla-rasgos{
+    display:grid;
+    grid-template-columns:repeat(2, 1fr);
+    gap:1.1rem;
+    margin-top:1rem;
+  }
+  @media(max-width:560px){ .rejilla-rasgos{ grid-template-columns:1fr; } }
+
+  .rasgo{
+    background:rgba(255,246,230,0.05);
+    border:1px solid rgba(255,246,230,0.12);
+    border-radius:4px;
+    padding:1.4rem 1.3rem;
+  }
+  .rasgo .simbolo{ font-size:1.5rem; display:block; margin-bottom:0.6rem; }
+  .rasgo h3{ font-size:1.05rem; margin-bottom:0.45rem; font-style:normal; }
+  .rasgo p{ font-size:0.92rem; opacity:0.78; line-height:1.6; }
+
+  /* ---------------- SORPRESA ---------------- */
+
+  .sorpresa{
+    text-align:center;
+  }
+  .boton-sorpresa{
+    font-family:'Space Mono', monospace;
+    background:transparent;
+    border:1px solid var(--clr-coral);
+    color:var(--clr-coral-suave);
+    padding:0.9rem 1.8rem;
+    border-radius:100px;
+    font-size:0.85rem;
+    letter-spacing:0.06em;
+    cursor:pointer;
+    transition:background 0.25s ease, color 0.25s ease;
+  }
+  .boton-sorpresa:hover{
+    background:var(--clr-coral);
+    color:var(--clr-abismo);
+  }
+  .mensaje-oculto{
+    max-width:44ch;
+    margin:1.8rem auto 0;
+    font-family:'Fraunces', serif;
+    font-style:italic;
+    font-size:1.25rem;
+    color:var(--clr-luna);
+    line-height:1.6;
+    opacity:0;
+    max-height:0;
+    overflow:hidden;
+    transition:opacity 0.6s ease;
+  }
+  .mensaje-oculto.visible{
+    opacity:1;
+    max-height:300px;
+    margin-top:1.8rem;
+  }
+
+  /* ---------------- FOOTER ---------------- */
+
+  footer{
+    text-align:center;
+    padding:4rem 1.5rem 3rem;
+    background:var(--clr-abismo);
+  }
+  footer .simbolo-cancer{
+    font-size:1.6rem;
+    display:block;
+    margin-bottom:0.8rem;
+    color:var(--clr-coral-suave);
+  }
+  footer p{
+    font-family:'Space Mono', monospace;
+    font-size:0.72rem;
+    letter-spacing:0.1em;
+    opacity:0.45;
+    text-transform:uppercase;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation:none !important; transition:none !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     Para personalizar: busca los textos entre 【 】 y cámbialos.
+     El nombre, el restaurante y la hora están marcados abajo.
+     ============================================================ -->
+
+<section class="hero">
+  <div class="estrellas"></div>
+  <div class="luna" title="Tócame"></div>
+
+  <span class="eyebrow">14 de julio · Cáncer 🦀</span>
+  <h1>Feliz cumpleaños,<br><span>【 mi cangrejita 】</span></h1>
+  <p class="hero-sub">Hoy la luna te celebra a ti. Aquí va tu día, hecho a tu medida — con cariño, en Rosarito.</p>
+  <div class="fecha-pill">🌙 14 · 07 · 2026</div>
+
+  <div class="escenario-cangrejo">
+    <svg class="cangrejo" viewBox="0 0 64 40" xmlns="http://www.w3.org/2000/svg">
+      <ellipse cx="32" cy="20" rx="20" ry="13" fill="#ff8a65"/>
+      <circle cx="22" cy="12" r="4" fill="#ff8a65"/>
+      <circle cx="42" cy="12" r="4" fill="#ff8a65"/>
+      <circle cx="22" cy="12" r="1.6" fill="#071624"/>
+      <circle cx="42" cy="12" r="1.6" fill="#071624"/>
+      <path d="M4 18 C -4 14, -4 24, 6 24" stroke="#ff8a65" stroke-width="3" fill="none" stroke-linecap="round"/>
+      <path d="M60 18 C 68 14, 68 24, 58 24" stroke="#ff8a65" stroke-width="3" fill="none" stroke-linecap="round"/>
+      <g stroke="#e8663f" stroke-width="2.4" stroke-linecap="round">
+        <path d="M14 30 L8 36"/>
+        <path d="M22 32 L18 38"/>
+        <path d="M42 32 L46 38"/>
+        <path d="M50 30 L56 36"/>
+      </g>
+    </svg>
+  </div>
+
+  <div class="olas">
+    <svg class="ola-fondo" viewBox="0 0 1440 120" xmlns="http://www.w3.org/2000/svg">
+      <path fill="#154066" d="M0,64L60,53.3C120,43,240,21,360,26.7C480,32,600,64,720,74.7C840,85,960,75,1080,58.7C1200,43,1320,21,1380,10.7L1440,0L1440,120L0,120Z"></path>
+    </svg>
+    <svg class="ola-frente" viewBox="0 0 1440 100" style="margin-top:-40px;" xmlns="http://www.w3.org/2000/svg">
+      <path fill="#0d2740" d="M0,50L48,58.3C96,67,192,83,288,80C384,77,480,55,576,45C672,35,768,37,864,45C960,53,1056,67,1152,64C1248,61,1344,41,1392,31L1440,21L1440,100L0,100Z"></path>
+    </svg>
+  </div>
+
+  <span class="scroll-hint">desliza ↓</span>
+</section>
+
+<section class="marino-bg">
+  <div class="contenedor">
+    <span class="kicker">Una carta para ti</span>
+    <div class="carta">
+      <p>Sé que hoy también tienes que ir a trabajar — pero eso no significa que no sea tu día. Cada año, el 14 de julio, el mundo se detiene un momento nada más para recordar lo que significas para las personas que te queremos, y hoy me toca a mí recordártelo por escrito.</p>
+      <p>Eres cangrejo, y como buena cangrejita: tienes un caparazón fuerte para proteger lo que amas, pero por dentro eres puro corazón. Te llevaré al trabajo hoy, pensando todo el día en la noche que nos espera.</p>
+      <p>Feliz cumpleaños, mi amor. Que este nuevo año de vida te traiga tanto mar como el que llevas dentro.</p>
+      <p class="firma">— con todo mi cariño</p>
+    </div>
+  </div>
+</section>
+
+<section class="noche-bg">
+  <div class="contenedor">
+    <span class="kicker">Itinerario del día</span>
+    <h2>Así se ve tu 14 de julio</h2>
+    <div class="linea-tiempo">
+      <div class="momento">
+        <span class="hora mono">POR LA MAÑANA</span>
+        <h3>Salida juntos</h3>
+        <p>Te llevo al trabajo. Un ratito nada más, pero es nuestro — para empezar el día como se debe, antes de que el mundo te reclame por unas horas.</p>
+      </div>
+      <div class="momento">
+        <span class="hora mono">DURANTE EL DÍA</span>
+        <h3>Aguanta tantito 🦀</h3>
+        <p>Sé que hay que trabajar, pero no dejes de checar el celular de vez en cuando... podría haber alguna sorpresa esperándote.</p>
+      </div>
+      <div class="momento">
+        <span class="hora mono">POR LA NOCHE · 【 8:00 PM 】</span>
+        <h3>Cena en 【 nombre del restaurante 】, Rosarito</h3>
+        <p>Para cerrar el día como se merece: comida mexicana, buena mesa y tiempo para nosotros, frente al mar que tanto te gusta.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="marino-bg">
+  <div class="contenedor">
+    <span class="kicker">Cosas de cangrejita</span>
+    <h2>Por qué Cáncer te queda perfecto</h2>
+    <div class="rejilla-rasgos">
+      <div class="rasgo">
+        <span class="simbolo">🐚</span>
+        <h3>Caparazón fuerte</h3>
+        <p>Proteges a los tuyos como si fuera lo único que importa. Y lo es.</p>
+      </div>
+      <div class="rasgo">
+        <span class="simbolo">🌙</span>
+        <h3>Guiada por la luna</h3>
+        <p>Sientes las cosas antes de que pasen. Tu intuición casi nunca falla.</p>
+      </div>
+      <div class="rasgo">
+        <span class="simbolo">🏠</span>
+        <h3>Hogareña de corazón</h3>
+        <p>Donde estás tú, se siente como casa. Eso no lo hace cualquiera.</p>
+      </div>
+      <div class="rasgo">
+        <span class="simbolo">💙</span>
+        <h3>Lealtad de mar profundo</h3>
+        <p>Cuando quieres a alguien, es para siempre. Así de simple.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="noche-bg sorpresa">
+  <div class="contenedor">
+    <span class="kicker">Una cosa más</span>
+    <h2>Toca el botón</h2>
+    <button class="boton-sorpresa" id="btnSorpresa">Abrir sorpresa 🦀</button>
+    <p class="mensaje-oculto" id="mensajeOculto">
+      【 Escribe aquí un mensaje secreto para ella: algo que solo ustedes dos entiendan, una promesa, un plan para el futuro, o simplemente un "te amo" bien dicho. 】
+    </p>
+  </div>
+</section>
+
+<footer>
+  <span class="simbolo-cancer">♋</span>
+  <p>Hecho con cariño para tu 14 de julio</p>
+</footer>
+
+<script>
+  document.getElementById('btnSorpresa').addEventListener('click', function(){
+    document.getElementById('mensajeOculto').classList.toggle('visible');
+  });
+</script>
+
+</body>
+</html>
