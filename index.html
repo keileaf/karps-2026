@@ -673,20 +673,26 @@
     const intervalo = setInterval(actualizar, 1000);
   })();
 
-  // Horóscopo diario automático (signo Cáncer) — API pública aztro
+  // Horóscopo diario automático (signo Cáncer) — API Ninjas
+  // 1) Regístrate gratis en https://api-ninjas.com/register
+  // 2) Copia tu API key y pégala abajo donde dice 【 TU_API_KEY_AQUI 】
   (function(){
+    const API_KEY = 'ilJ0sQZpNHZw8Hi2IXOq8n0PVP8Pvlvp7kuW3VKr';
+
     const elTexto = document.getElementById('horoscopoTexto');
     const elFecha = document.getElementById('horoscopoFecha');
 
-    fetch('https://aztro.sameerkumar.website/?sign=cancer&day=today', { method: 'POST' })
+    fetch('https://api.api-ninjas.com/v1/horoscope?zodiac=cancer', {
+      headers: { 'X-Api-Key': API_KEY }
+    })
       .then(function(resp){
         if(!resp.ok){ throw new Error('respuesta no ok'); }
         return resp.json();
       })
       .then(function(data){
-        elTexto.textContent = data.description;
-        if(data.current_date){
-          elFecha.textContent = '— horóscopo del ' + data.current_date;
+        elTexto.textContent = data.horoscope;
+        if(data.date){
+          elFecha.textContent = '— horóscopo del ' + data.date;
         }
       })
       .catch(function(){
