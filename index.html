@@ -673,14 +673,25 @@
     const intervalo = setInterval(actualizar, 1000);
   })();
 
-  // Horóscopo diario automático (signo Cáncer) — API Ninjas
-  // 1) Regístrate gratis en https://api-ninjas.com/register
-  // 2) Copia tu API key y pégala abajo donde dice 【 TU_API_KEY_AQUI 】
+  // Horóscopo diario automático (signo Cáncer) — API Ninjas + traducción a español
   (function(){
     const API_KEY = 'ilJ0sQZpNHZw8Hi2IXOq8n0PVP8Pvlvp7kuW3VKr';
 
     const elTexto = document.getElementById('horoscopoTexto');
     const elFecha = document.getElementById('horoscopoFecha');
+
+    function traducir(texto){
+      const url = 'https://api.mymemory.translated.net/get?q=' + encodeURIComponent(texto) + '&langpair=en|es';
+      return fetch(url)
+        .then(function(resp){ return resp.json(); })
+        .then(function(data){
+          if(data && data.responseData && data.responseData.translatedText){
+            return data.responseData.translatedText;
+          }
+          return texto; // si falla la traducción, se queda en inglés
+        })
+        .catch(function(){ return texto; });
+    }
 
     fetch('https://api.api-ninjas.com/v1/horoscope?zodiac=cancer', {
       headers: { 'X-Api-Key': API_KEY }
@@ -690,10 +701,13 @@
         return resp.json();
       })
       .then(function(data){
-        elTexto.textContent = data.horoscope;
         if(data.date){
           elFecha.textContent = '— horóscopo del ' + data.date;
         }
+        return traducir(data.horoscope);
+      })
+      .then(function(textoTraducido){
+        elTexto.textContent = textoTraducido;
       })
       .catch(function(){
         elTexto.textContent = 'No pudimos cargar el horóscopo de hoy, pero seguro las estrellas están de tu lado 🦀✨';
