@@ -199,6 +199,69 @@
     z-index:3;
   }
 
+  /* ---------------- CUENTA REGRESIVA (dentro del hero) ---------------- */
+
+  .cuenta-regresiva{
+    position:relative;
+    z-index:3;
+    margin-top:2.2rem;
+    text-align:center;
+  }
+
+  .cr-grid{
+    display:flex;
+    justify-content:center;
+    gap:0.9rem;
+    flex-wrap:wrap;
+  }
+
+  .cr-bloque{
+    background:rgba(255,246,230,0.06);
+    border:1px solid rgba(255,224,102,0.28);
+    border-radius:10px;
+    padding:1rem 0.9rem;
+    min-width:74px;
+    position:relative;
+    overflow:hidden;
+  }
+
+  .cr-bloque::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:radial-gradient(circle at 50% -10%, rgba(255,224,102,0.18), rgba(255,224,102,0) 60%);
+    pointer-events:none;
+  }
+
+  .cr-numero{
+    font-family:'Space Mono', monospace;
+    font-size:clamp(1.5rem, 4vw, 2rem);
+    font-weight:700;
+    color:#ffe066;
+    line-height:1;
+    display:block;
+  }
+
+  .cr-etiqueta{
+    font-family:'Space Mono', monospace;
+    font-size:0.6rem;
+    letter-spacing:0.16em;
+    text-transform:uppercase;
+    color:var(--clr-arena);
+    opacity:0.8;
+    margin-top:0.5rem;
+    display:block;
+  }
+
+  .cr-sub{
+    margin-top:1rem;
+    font-family:'Space Mono', monospace;
+    font-size:0.72rem;
+    letter-spacing:0.04em;
+    color:var(--clr-espuma);
+    opacity:0.7;
+  }
+
   /* ---------------- SECCIONES GENERALES ---------------- */
 
   section{
@@ -411,6 +474,28 @@
   <p class="hero-sub">Estamos en vísperas de tu cumpleaños, por .o que habrá actualizaciones en esta página cada 1 o 2 días xD</p>
   <div class="fecha-pill">🌙 14 · 07 · 2026</div>
 
+  <div class="cuenta-regresiva">
+    <div class="cr-grid">
+      <div class="cr-bloque">
+        <span class="cr-numero" id="crDias">00</span>
+        <span class="cr-etiqueta">Días</span>
+      </div>
+      <div class="cr-bloque">
+        <span class="cr-numero" id="crHoras">00</span>
+        <span class="cr-etiqueta">Horas</span>
+      </div>
+      <div class="cr-bloque">
+        <span class="cr-numero" id="crMinutos">00</span>
+        <span class="cr-etiqueta">Minutos</span>
+      </div>
+      <div class="cr-bloque">
+        <span class="cr-numero" id="crSegundos">00</span>
+        <span class="cr-etiqueta">Segundos</span>
+      </div>
+    </div>
+    <p class="cr-sub" id="crMensaje">🦀 14 de julio 2026 🦀</p>
+  </div>
+
   <div class="escenario-cangrejo">
     <svg class="cangrejo" viewBox="0 0 64 40" xmlns="http://www.w3.org/2000/svg">
       <ellipse cx="32" cy="20" rx="20" ry="13" fill="#ff8a65"/>
@@ -535,6 +620,47 @@
   document.getElementById('btnSorpresa').addEventListener('click', function(){
     document.getElementById('mensajeOculto').classList.toggle('visible');
   });
+
+  // Cuenta regresiva al cumpleaños — 14 de julio (hora local de la Ciudad de México)
+  (function(){
+    const fechaObjetivo = new Date('2026-07-14T00:00:00-06:00').getTime();
+
+    const elDias = document.getElementById('crDias');
+    const elHoras = document.getElementById('crHoras');
+    const elMinutos = document.getElementById('crMinutos');
+    const elSegundos = document.getElementById('crSegundos');
+    const elMensaje = document.getElementById('crMensaje');
+
+    function pad(n){ return String(n).padStart(2, '0'); }
+
+    function actualizar(){
+      const ahora = new Date().getTime();
+      const restante = fechaObjetivo - ahora;
+
+      if(restante <= 0){
+        elDias.textContent = '00';
+        elHoras.textContent = '00';
+        elMinutos.textContent = '00';
+        elSegundos.textContent = '00';
+        elMensaje.textContent = '🎉 ¡Feliz cumpleaños, mi amor! 🎉';
+        clearInterval(intervalo);
+        return;
+      }
+
+      const dias = Math.floor(restante / (1000 * 60 * 60 * 24));
+      const horas = Math.floor((restante % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutos = Math.floor((restante % (1000 * 60 * 60)) / (1000 * 60));
+      const segundos = Math.floor((restante % (1000 * 60)) / 1000);
+
+      elDias.textContent = pad(dias);
+      elHoras.textContent = pad(horas);
+      elMinutos.textContent = pad(minutos);
+      elSegundos.textContent = pad(segundos);
+    }
+
+    actualizar();
+    const intervalo = setInterval(actualizar, 1000);
+  })();
 </script>
 
 </body>
