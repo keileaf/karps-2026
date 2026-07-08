@@ -600,6 +600,17 @@
   </div>
 </section>
 
+<section class="marino-bg">
+  <div class="contenedor">
+    <span class="kicker">Directo de las estrellas</span>
+    <h2>Tu horóscopo de hoy ♋</h2>
+    <div class="carta">
+      <p id="horoscopoTexto">Cargando horóscopo del día…</p>
+      <p class="firma" id="horoscopoFecha" style="font-size:0.85rem; opacity:0.7;"></p>
+    </div>
+  </div>
+</section>
+
 <section class="noche-bg sorpresa">
   <div class="contenedor">
     <span class="kicker">Una cosa más</span>
@@ -660,6 +671,27 @@
 
     actualizar();
     const intervalo = setInterval(actualizar, 1000);
+  })();
+
+  // Horóscopo diario automático (signo Cáncer) — API pública aztro
+  (function(){
+    const elTexto = document.getElementById('horoscopoTexto');
+    const elFecha = document.getElementById('horoscopoFecha');
+
+    fetch('https://aztro.sameerkumar.website/?sign=cancer&day=today', { method: 'POST' })
+      .then(function(resp){
+        if(!resp.ok){ throw new Error('respuesta no ok'); }
+        return resp.json();
+      })
+      .then(function(data){
+        elTexto.textContent = data.description;
+        if(data.current_date){
+          elFecha.textContent = '— horóscopo del ' + data.current_date;
+        }
+      })
+      .catch(function(){
+        elTexto.textContent = 'No pudimos cargar el horóscopo de hoy, pero seguro las estrellas están de tu lado 🦀✨';
+      });
   })();
 </script>
 
